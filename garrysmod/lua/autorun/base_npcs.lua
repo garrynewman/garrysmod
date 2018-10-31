@@ -460,31 +460,35 @@ if ( IsMounted( "ep2" ) ) then
 	} )
 end
 
-if ( IsMounted( "hl1" ) ) then
+if ( not IsMounted( "hl1" ) ) then return end
 
-	Category = "Half-Life: Source"
+Category = "Half-Life: Source"
 
-	AddNPC( { Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category } )
-	AddNPC( { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200 } )
-	AddNPC( { Name = "Tentacle", Class = "monster_tentacle", Category = Category } )
-	AddNPC( { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } )
-	AddNPC( { Name = "Gonarch", Class = "monster_bigmomma", Category = Category } )
-	AddNPC( { Name = "Bullsquid", Class = "monster_bullchicken", Category = Category } )
-	AddNPC( { Name = "Gargantua", Class = "monster_gargantua", Category = Category } )
-	AddNPC( { Name = "Assassin", Class = "monster_human_assassin", Category = Category } )
-	AddNPC( { Name = "Baby Crab", Class = "monster_babycrab", Category = Category } )
-	AddNPC( { Name = "Grunt", Class = "monster_human_grunt", Category = Category } )
-	AddNPC( { Name = "Cockroach", Class = "monster_cockroach", Category = Category } )
-	AddNPC( { Name = "Houndeye", Class = "monster_houndeye", Category = Category } )
-	AddNPC( { Name = "Scientist", Class = "monster_scientist", Category = Category, KeyValues = { body = "-1" } } )
-	AddNPC( { Name = "Snark", Class = "monster_snark", Category = Category } )
-	AddNPC( { Name = "Zombie", Class = "monster_zombie", Category = Category } )
-	AddNPC( { Name = "Headcrab", Class = "monster_headcrab", Category = Category } )
-	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category } )
-	AddNPC( { Name = "Security Officer", Class = "monster_barney", Category = Category } )
-
-	AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
-	AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
-	AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = 0, OnFloor = true, SpawnFlags = 32 } )
-
-end
+AddNPC( { Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category } )
+AddNPC( { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200, NoDrop = true } )
+AddNPC( { Name = "Tentacle", Class = "monster_tentacle", Category = Category, OnFloor = true } )
+AddNPC( { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } )
+AddNPC( { Name = "Gonarch", Class = "monster_bigmomma", Category = Category } )
+AddNPC( { Name = "Bullsquid", Class = "monster_bullchicken", Category = Category } )
+AddNPC( { Name = "Gargantua", Class = "monster_gargantua", Category = Category } )
+AddNPC( { Name = "Assassin", Class = "monster_human_assassin", Category = Category } )
+AddNPC( { Name = "Baby Crab", Class = "monster_babycrab", Category = Category } )
+AddNPC( { Name = "Grunt", Class = "monster_human_grunt", Category = Category } )
+AddNPC( { Name = "Cockroach", Class = "monster_cockroach", Category = Category } )
+AddNPC( { Name = "Houndeye", Class = "monster_houndeye", Category = Category } )
+AddNPC( { Name = "Scientist", Class = "monster_scientist", Category = Category, KeyValues = { body = -1 } } )
+AddNPC( { Name = "Snark", Class = "monster_snark", Category = Category } )
+AddNPC( { Name = "Zombie", Class = "monster_zombie", Category = Category } )
+AddNPC( { Name = "Headcrab", Class = "monster_headcrab", Category = Category } )
+AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category, NoDrop = true } )
+AddNPC( { Name = "Security Officer", Class = "monster_barney", Category = Category } )
+AddNPC( { Name = "Barnacle", Class = "monster_barnacle", Category = Category, OnCeiling = true, Offset = 2 } )
+AddNPC( { Name = "G-Man", Class = "monster_gman", Category = Category } )
+AddNPC( { Name = "Ichthyosaur", Class = "monster_ichthyosaur", Category = Category, NoDrop = true, InWater = true, Offset = 64 } )
+AddNPC( { Name = "Leech", Class = "monster_leech", Category = Category, NoDrop = true, InWater = true, Offset = 64 } )
+AddNPC( { Name = "Flyer", Class = "monster_flyer", Category = Category, Offset = function() return math.random( 100, 500 ) end, NoDrop = true } )
+AddNPC( { Name = "Flyer Squad", Class = "monster_flyer_flock", Category = Category, Offset = function() return math.random( 100, 500 ) end, NoDrop = true,
+	KeyValues = { iFlockSize = function() return math.random( 3, 7 ) end, flFlockRadius = 64 } } )
+AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = 0, OnFloor = true, SpawnFlags = 32 } )

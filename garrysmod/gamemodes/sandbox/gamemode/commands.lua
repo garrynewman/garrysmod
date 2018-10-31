@@ -327,6 +327,10 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 
 	if ( NPCData.AdminOnly && !ply:IsAdmin() ) then return end
 
+	if ( NPCData.InWater && bit.band( util.PointContents( Position ), CONTENTS_WATER ) == 0 ) then
+		return nil
+	end
+
 	local bDropToFloor = false
 
 	--
@@ -354,7 +358,16 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	--
 	-- Offset the position
 	--
-	local Offset = NPCData.Offset or 32
+	local Offset = NPCData.Offset
+
+	if ( isfunction( Offset ) ) then
+		Offset = Offset( NPC )
+	end
+
+	if ( Offset == nil ) then
+		Offset = 32
+	end
+
 	NPC:SetPos( Position + Normal * Offset )
 
 	-- Rotate to face player (expected behaviour)
@@ -401,7 +414,13 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	--
 	if ( NPCData.KeyValues ) then
 		for k, v in pairs( NPCData.KeyValues ) do
-			NPC:SetKeyValue( k, v )
+			if ( isfunction( v ) ) then
+				v = v( NPC )
+
+				if ( v == nil ) then continue end
+			end
+
+			NPC:SetKeyValue( k, tostring( v ) )
 		end
 	end
 
@@ -548,6 +567,7 @@ end
 local function AddNPCToDuplicator( class ) duplicator.RegisterEntityClass( class, GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" ) end
 
 -- HL2
+AddNPCToDuplicator( "npc_advisor" )
 AddNPCToDuplicator( "npc_alyx" )
 AddNPCToDuplicator( "npc_magnusson" )
 AddNPCToDuplicator( "npc_breen" )
@@ -600,21 +620,29 @@ AddNPCToDuplicator( "npc_fastzombie_torso" )
 AddNPCToDuplicator( "monster_alien_grunt" )
 AddNPCToDuplicator( "monster_alien_slave" )
 AddNPCToDuplicator( "monster_alien_controller" )
+AddNPCToDuplicator( "monster_barnacle" )
 AddNPCToDuplicator( "monster_barney" )
 AddNPCToDuplicator( "monster_bigmomma" )
 AddNPCToDuplicator( "monster_bullchicken" )
 AddNPCToDuplicator( "monster_babycrab" )
 AddNPCToDuplicator( "monster_cockroach" )
+AddNPCToDuplicator( "monster_flyer" )
 AddNPCToDuplicator( "monster_houndeye" )
 AddNPCToDuplicator( "monster_headcrab" )
 AddNPCToDuplicator( "monster_gargantua" )
+AddNPCToDuplicator( "monster_gman" )
 AddNPCToDuplicator( "monster_human_assassin" )
 AddNPCToDuplicator( "monster_human_grunt" )
+AddNPCToDuplicator( "monster_ichthyosaur" )
+AddNPCToDuplicator( "monster_leech" )
 AddNPCToDuplicator( "monster_scientist" )
 AddNPCToDuplicator( "monster_snark" )
 AddNPCToDuplicator( "monster_nihilanth" )
 AddNPCToDuplicator( "monster_tentacle" )
 AddNPCToDuplicator( "monster_zombie" )
+AddNPCToDuplicator( "monster_barney_dead" )
+AddNPCToDuplicator( "monster_hgrunt_dead" )
+AddNPCToDuplicator( "monster_scientist_dead" )
 AddNPCToDuplicator( "monster_turret" )
 AddNPCToDuplicator( "monster_miniturret" )
 AddNPCToDuplicator( "monster_sentry" )
