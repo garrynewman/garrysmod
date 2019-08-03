@@ -53,7 +53,7 @@ AddVehicle( {
 	}
 }, "Pod" )
 
-if ( IsMounted( "ep2" ) ) then 
+if ( IsMounted( "ep2" ) ) then
 	AddVehicle( {
 		Name = "Jalopy",
 		Model = "models/vehicle.mdl",
@@ -71,8 +71,10 @@ end
 
 local Category = "Chairs"
 
+-- Returns sequence, activity
+-- Returning -1 for the sequence will select a weighted one based on the activity
 local function HandleRollercoasterAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER ) 
+	return -1, ACT_GMOD_SIT_ROLLERCOASTER
 end
 
 AddVehicle( {
@@ -183,7 +185,7 @@ AddVehicle( {
 	}
 }, "Chair_Office2" )
 
-if ( IsMounted( "ep2" ) ) then 
+if ( IsMounted( "ep2" ) ) then
 	AddVehicle( {
 		Name = "Jalopy Seat",
 		Model = "models/nova/jalopy_seat.mdl",
@@ -206,14 +208,15 @@ end
 -- PhoeniX-Storms Vehicles
 
 local function HandlePHXSeatAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_HL2MP_SIT ) 
+	return -1, ACT_HL2MP_SIT
 end
 
 local function HandlePHXVehicleAnimation( vehicle, ply )
-	return ply:SelectWeightedSequence( ACT_DRIVE_JEEP ) 
+	return -1, ACT_DRIVE_JEEP
 end
+
 local function HandlePHXAirboatAnimation( vehicle, ply )
-	return ply:SelectWeightedSequence( ACT_DRIVE_AIRBOAT ) 
+	return -1, ACT_DRIVE_AIRBOAT
 end
 
 AddVehicle( {
