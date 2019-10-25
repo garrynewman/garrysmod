@@ -14,9 +14,18 @@ Format = string.format
 --
 local C_Material = Material
 
+local tMaterials = {}
+
 function Material( name, words )
 
-	if ( !words ) then return C_Material( name ) end
+	if ( !words ) then
+		local material = C_Material( name )
+		if ( not tMaterials[ name ] and not material:IsError() ) then
+			tMaterials[ name ] = C_Material( name )
+		end
+		
+		return material:IsError() and material or tMaterials[ name ]
+	end
 
 	local str = (words:find("vertexlitgeneric") and "1" or "0")
 	str = str .. (words:find("nocull") and "1" or "0")
@@ -24,8 +33,13 @@ function Material( name, words )
 	str = str .. (words:find("mips") and "1" or "0")
 	str = str .. (words:find("noclamp") and "1" or "0")
 	str = str .. (words:find("smooth") and "1" or "0")
+	
+	local material = C_Material( name, str )
+	if ( not tMaterials[ name .. str ] and not material:IsError() ) then
+		tMaterials[ name .. str ] = C_Material( name, str )
+	end
 
-	return C_Material( name, str )
+	return material:IsError() and material or tMaterials[ name .. str ]
 
 end
 
