@@ -26,8 +26,8 @@ function PANEL:Init()
 	self.SearchBar:SetUpdateOnType( true )
 	self.SearchBar.OnValueChange = function( s, text )
 		local text = text:Trim():lower()
-
-		for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
+    
+		for id, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
 			local count = 0
 			local category_matched = false
 
@@ -35,7 +35,7 @@ function PANEL:Init()
 				category_matched = true
 			end
 
-			for id, item in pairs( category:GetChildren() ) do
+			for id, item in ipairs( category:GetChildren() ) do
 				if ( item == category.Header ) then continue end
 
 				local str = item.Text
@@ -154,8 +154,7 @@ end
 
 function PANEL:SetActive( cp )
 
-	local kids = self.Content:GetCanvas():GetChildren()
-	for k, v in pairs( kids ) do
+	for k, v in ipairs( self.Content:GetCanvas():GetChildren() ) do
 		v:SetVisible( false )
 	end
 

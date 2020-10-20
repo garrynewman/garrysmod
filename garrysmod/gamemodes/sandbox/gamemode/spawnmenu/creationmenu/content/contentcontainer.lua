@@ -90,9 +90,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:RebuildAll( proppanel )
 
-	local items = self.IconList:GetChildren()
-
-	for k, v in pairs( items ) do
+	for k, v in ipairs( self.IconList:GetChildren() ) do
 
 		v:RebuildSpawnIcon()
 
@@ -105,8 +103,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:GetCount()
 
-	local items = self.IconList:GetChildren()
-	return #items
+	return #self.IconList:GetChildren()
 
 end
 
@@ -135,9 +132,7 @@ function PANEL:ContentsToTable( contentpanel )
 
 	local tab = {}
 
-	local items = self.IconList:GetChildren()
-
-	for k, v in pairs( items ) do
+	for k, v in ipairs( self.IconList:GetChildren() ) do
 
 		v:ToTable( tab )
 

@@ -427,8 +427,7 @@ end
 
 function meta:InvalidateChildren( bRecurse )
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( bRecurse ) then
 			v:InvalidateChildren( true )
@@ -481,8 +480,7 @@ function meta:GetClosestChild( x, y )
 	local distance = 9999
 	local closest = nil
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 		local dist = v:DistanceFrom( x, y )
 		if ( dist < distance ) then
 			distance = dist
@@ -515,7 +513,7 @@ function meta:MoveToAfter( pnl )
 		return false
 	end
 
-	for k, v in pairs( children ) do
+	for k, v in ipairs( children ) do
 		v:SetZPos( k )
 	end
 
@@ -538,7 +536,7 @@ function meta:MoveToBefore( pnl )
 		return false
 	end
 
-	for k, v in pairs( children ) do
+	for k, v in ipairs( children ) do
 		v:SetZPos( k )
 	end
 
@@ -546,7 +544,7 @@ end
 
 function meta:Clear()
 
-	for k, panel in pairs( self:GetChildren() ) do
+	for k, panel in ipairs( self:GetChildren() ) do
 		panel:Remove()
 	end
 
