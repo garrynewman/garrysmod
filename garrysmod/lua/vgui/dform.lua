@@ -88,6 +88,59 @@ function PANEL:TextEntry( strLabel, strConVar )
 
 end
 
+function PANEL:PropSelect( strLab, strVar, arList )
+
+	local props = vgui.Create( "PropSelect", self )
+
+	props:ControlValues( { convar = strVar, label = strLab } )
+
+	for ID = 1, #arList do
+		local dat = arList[ID]
+		local mdl = tostring( dat.model or dat[1] or "")
+		local tip = tostring( dat.tooltip or dat[2] or mdl )
+
+		props:AddModel(mdl):SetToolTip(tip)
+	end
+
+	self:AddPanel(props)
+
+	return props
+end
+
+function PANEL:ControlPresets( strDir, cvList )
+
+	local preset = vgui.Create("ControlPresets", self )
+
+	preset:SetPreset( strDir )
+	preset:AddOption( "Default", cvList )
+	for key, val in pairs( table.GetKeys( cvList ) ) do
+		preset:AddConVar(val)
+	end
+
+	self:AddItem( preset )
+
+	return preset
+end
+
+function PANEL:NumpadControl( strLab1, strVar1, strLab2, strVar2 )
+
+	if ( strLab1 == nil or strVar1 == nil ) then return nil end
+
+	local numpad = vgui.Create( "CtrlNumPad", self )
+
+	numpad:SetLabel1( tostring( strLabel1 or "" ) )
+	numpad:SetConVar1( tostring( strConVar1 or "" ) )
+
+	if ( strLab2 != nil and strVar2 != nil) then
+		numpad:SetLabel2( tostring( strLab2 or "" ) )
+		numpad:SetConVar2( tostring( strVar2 or "" ) )
+	end
+
+	self:AddPanel(numpad)
+
+	return numpad
+end
+
 function PANEL:ComboBox( strLabel, strConVar )
 
 	local left = vgui.Create( "DLabel", self )
