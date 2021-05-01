@@ -215,3 +215,23 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+
+--[[---------------------------------------------------------
+	Name: LinearSet(nStart, nEnd, nAmount)
+	Desc: Generates additional `nAmount` points in linaer space between `nStart` and `nEnd`
+	Rets: A table including the start, end and the generated mid points
+	Usage: math.LinearSet(0, 10, 3) --> {0,2.5,5,7.5,10}
+-----------------------------------------------------------]]
+function math.LinearSet(nStart, nEnd, nAmount)
+	local fAmt = math.floor(tonumber(nAmount) or 100)
+	fAmt = ((fAmt >= 0) and fAmt or 0)
+	local iAmt, dAmt = (fAmt + 1), (nEnd - nStart)
+	local fStart, fEnd, nAdd = 1, (fAmt+2), (dAmt / iAmt)
+	local tO = {[fStart] = nStart, [fEnd] = nEnd}
+	while ( fStart <= fEnd ) do
+		fStart, fEnd = (fStart + 1), (fEnd - 1)
+		tO[fStart] = tO[fStart - 1] + nAdd
+		tO[fEnd]   = tO[fEnd   + 1] - nAdd
+	end
+	return tO
+end
