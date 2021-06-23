@@ -365,3 +365,25 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
 
 end
+
+--[[---------------------------------------------------------
+   Name: GetOrthogonalEx ( vF, vD, bN )
+   Desc: Recalculates the orthogonality of right and up vectors
+         according to forward direction and plane origin vectors.
+ * vF     > The forward direction for the orthogonality process
+ * vD     > The direction of the forward vector plane origin
+ * bN     > When set to true, normalizes the three unit vectors
+ * vU, vR > The function returns the up and right vectors on success
+-----------------------------------------------------------]]
+function util.GetOrthogonalEx( vF, vD, bN )
+	local vR = vF:Cross( vD )
+	local vU = vR:Cross( vF )
+
+	if ( bN ) then
+		vF:Normalize()
+		vR:Normalize()
+		vU:Normalize()
+	end
+
+	return vU, vR
+end
