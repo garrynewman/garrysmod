@@ -4,15 +4,17 @@
 	Desc: Copies any missing data from base to t
 -----------------------------------------------------------]]
 function table.Inherit( t, base )
-
-	for k, v in pairs( base ) do
-		if ( t[ k ] == nil ) then t[ k ] = v end
+	for k, v in pairs( base ) do 
+		if ( t[ k ] == nil ) then
+			t[ k ] = v
+		elseif ( istable( t[ k ] ) && istable( v ) ) then
+			table.Inherit( t[ k ], v )
+		end
 	end
 
 	t[ "BaseClass" ] = base
 
 	return t
-
 end
 
 --[[---------------------------------------------------------
