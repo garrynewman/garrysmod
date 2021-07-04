@@ -1,10 +1,13 @@
 
 local string = string
 local surface = surface
+local ipairs = ipairs
 local math = math
 local Color = Color
+local IsColor = IsColor
 local tostring = tostring
 local color_white = color_white
+local table_concat = table.concat
 
 module( "draw" )
 
@@ -111,6 +114,64 @@ function SimpleTextOutlined(text, font, x, y, colour, xalign, yalign, outlinewid
 
 	return SimpleText( text, font, x, y, colour, xalign, yalign )
 
+end
+
+--[[---------------------------------------------------------
+	Name: MultiColorText(font, x, y, xalign, yalign, vararg)
+	Desc: Simple draw text at position, but with multiple colors.
+	Usage: vararg is color tables with r/g/b/a elements followed by a string to be drawn with said color.
+-----------------------------------------------------------]]
+function MultiColorText( font, x, y, xAlign, yAlign, ... )
+	
+	font	= font		or "DermaDefault"
+	x		= x			or 0
+	y		= y			or 0
+	xAlign	= xAlign	or TEXT_ALIGN_LEFT
+	yAlign	= yAlign	or TEXT_ALIGN_TOP
+
+	surface.SetFont( font )
+
+	local ipairs, table, origin = ipairs( { ... } )
+	local w, h = 0, 0
+
+	if ( xAlign != TEXT_ALIGN_LEFT ) then
+		local StringTable = {}
+
+		local i = 1
+		for k, v in ipairs, table, origin do
+			if not IsColor( v ) then
+				StringTable[i] = tostring( v )
+				i = i + 1
+			end
+		end
+
+		w, h = surface.GetTextSize( table_concat( StringTable ) )
+
+		if ( xAlign == TEXT_ALIGN_CENTER ) then
+			x = x - w/2
+		elseif ( xAlign == TEXT_ALIGN_RIGHT ) then
+			x = x - w
+		end
+	else
+		h = draw.GetFontHeight( font )
+	end
+
+	if ( yAlign == TEXT_ALIGN_CENTER ) then
+		y = y - h/2
+	elseif ( yAlign == TEXT_ALIGN_BOTTOM ) then
+		y = y - h
+	end
+
+	surface.SetTextColor( color_white )
+	surface.SetTextPos( x, y )
+
+	for k, v in ipairs, table, origin do
+		if IsColor( v ) then
+			surface.SetTextColor( v )
+		else
+			surface.DrawText( tostring( v ) )
+		end
+	end
 end
 
 --[[---------------------------------------------------------
