@@ -346,3 +346,14 @@ function string.Comma( number )
 	return number
 
 end
+
+function string.Interpolate( str, lookuptable )
+
+	return ( string.gsub( str, "{([_%a][_%w]*)}", function ( key )
+		local value = lookuptable[ key ]
+		assert( value != nil, "string.Interpolate: lookup failed for '" .. key .. "'" )
+
+		return tostring( value )
+	end) )
+
+end
